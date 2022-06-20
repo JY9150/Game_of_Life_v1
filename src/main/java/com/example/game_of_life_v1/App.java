@@ -11,7 +11,7 @@ public class App extends Application {
     public Stage mainStage;
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("AppLayout.fxml"));
         Scene scene = fxmlLoader.load();
         mainStage = stage;
         mainStage.setTitle("Game of Life v1");

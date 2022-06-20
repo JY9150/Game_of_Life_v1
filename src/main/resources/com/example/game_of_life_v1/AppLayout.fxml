@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Scene?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<Scene xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.game_of_life_v1.Controller2">
+    <AnchorPane prefHeight="381.0" prefWidth="418.0">
+      <children>
+         <Canvas fx:id="gameOfLifePane" height="200.0" width="421.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         <HBox alignment="CENTER" prefHeight="54.0" prefWidth="418.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+               <Button fx:id="nextStateBtn" mnemonicParsing="false" onAction="#nextOnClick" text="Next" />
+               <Button mnemonicParsing="false" onAction="#pauseOnClick" text="pause" />
+               <Button mnemonicParsing="false" onAction="#clearOnClick" text="clear" />
+               <Button mnemonicParsing="false" onAction="#randomOnClick" text="random" />
+            </children>
+         </HBox>
+      </children></AnchorPane>
+</Scene>
