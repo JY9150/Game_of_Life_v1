@@ -3,17 +3,25 @@ package com.example.game_of_life_v1;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +29,7 @@ import java.util.ResourceBundle;
 
 public class Controller2 implements Initializable {
     @FXML Button nextStateBtn;
-//    @FXML AnchorPane game_view;
+    @FXML Scene game_view;
     @FXML Canvas gameOfLifePane;
     @FXML ImageView image;
     @FXML HBox sBox;
@@ -31,8 +39,8 @@ public class Controller2 implements Initializable {
     private final int CELL_SIZE = 4;
     private final int CELL_WIDTH = 200;
     private final int CELL_HEIGHT = 200;
-    private final Color BG_COLOR = Color.TRANSPARENT;
-    private final Color DEAD_CELL_COLOR = Color.TRANSPARENT;
+    private final Color BG_COLOR = Color.BLACK;
+    private final Color DEAD_CELL_COLOR = BG_COLOR;
     private final Color ALIVE_CELL_COLOR = Color.BLACK;
     private final double STROKE_WIDTH = 0.1;
     private final Color STROKE_COLOR = Color.LIGHTGREY;
@@ -54,33 +62,94 @@ public class Controller2 implements Initializable {
     private final int PANE_WIDTH = CELL_WIDTH * CELL_SIZE;
     private final int PANE_HEIGHT = CELL_HEIGHT * CELL_SIZE;
 
+    private int mouseX;
+    private int mouseY;
+
 //===================================================== Initialize =====================================================
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         gameOfLifePane.setWidth(PANE_WIDTH);
         gameOfLifePane.setHeight(PANE_HEIGHT);
-        game_of_live_graphics = gameOfLifePane.getGraphicsContext2D();
-
         image.setFitWidth(PANE_WIDTH);
         image.setFitHeight(PANE_HEIGHT);
 
-
+        game_of_live_graphics = gameOfLifePane.getGraphicsContext2D();
         game_of_live_graphics.setStroke(STROKE_COLOR);
         game_of_live_graphics.setLineWidth(STROKE_WIDTH);
 
-        sRule[2]=true;
-        sRule[3]=true;
-//        sRule[4]=true;
 
-        bRule[3]=true;
-//        bRule[4]=true;
 
+//        gameOfLifePane.setOnMouseClicked(clickEvent ->{
+//            int x = (int)Math.floor(clickEvent.getX()/CELL_SIZE);
+//            int y = (int)Math.floor(clickEvent.getY()/CELL_SIZE);
+//            quickSet(x,y, !((curGenCells[x][y] & 0b1) > 0));
+//        });
+
+
+        gameOfLifePane.setOnMouseDragged(dragEvent -> {
+            int x = (int)Math.floor(dragEvent.getX()/CELL_SIZE);
+            int y = (int)Math.floor(dragEvent.getY()/CELL_SIZE);
+            if(!( mouseX == x && mouseY == y)){
+                quickSet(x,y, !((curGenCells[x][y] & 0b1) > 0));
+                mouseX = x;
+                mouseY = y;
+            }
+        });
+//        gameOfLifePane.setFocusTraversable(true);
+//        //todo control drag
+
+//            int startX = mouseX, startY = mouseY, endX, endY;
+//            if(dragEvent.){
+//                System.out.println("control");
+//                mouseX = (int)Math.floor(dragEvent.getX()/CELL_SIZE);
+//                mouseY = (int)Math.floor(dragEvent.getY()/CELL_SIZE);
+//
+//            }else{
+//                System.out.println("not control");
+//                endX = (int)Math.floor(dragEvent.getX()/CELL_SIZE);
+//                endY = (int)Math.floor(dragEvent.getY()/CELL_SIZE);
+//                if(!( startX == endX && startY == endY)){
+//                    game_of_live_graphics.setFill(Color.RED);
+//                    game_of_live_graphics.fillRect(startX * CELL_SIZE , startY * CELL_SIZE, (endX-startX)*CELL_SIZE, (endY-startY)*CELL_SIZE);
+//                }
+//
+//            }
+
+//        gameOfLifePane.setOnMouseDragOver(mouseDragEvent -> {
+//            System.out.println("drag over");
+//        });
+//        gameOfLifePane.setOnMouseDragged(event -> {
+//            System.out.println("drag");
+//        });
+//        gameOfLifePane.setOnMouseDragReleased(mouseDragEvent -> {
+//            System.out.println("drag release");
+//        });
+
+
+        game_view.setOnDragOver(dragEvent -> {
+            if(dragEvent.getDragboard().hasFiles()){
+                dragEvent.acceptTransferModes(TransferMode.ANY);
+            }
+        });
+        game_view.setOnDragDropped(dragEvent -> {
+            try {
+                image.setImage(new Image(new FileInputStream(dragEvent.getDragboard().getFiles().get(0))));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
+
+
+
+        rulesInitialize();
         checkBoxInitialize();
 
-        clearCells();
-        setRandom(0.5);
-        timeline.setCycleCount(Animation.INDEFINITE);
 
+        clearCells();
+//        setRandom(0.5);
+        quickSet(CELL_WIDTH/2, CELL_HEIGHT/2, true);
+        drawAllCells();
+        timeline.setCycleCount(Animation.INDEFINITE);
     }
 
     private void quickSet(int x, int y, boolean alive){
@@ -88,6 +157,7 @@ public class Controller2 implements Initializable {
         drawPicture(x,y);
     }
 
+    @Deprecated
     private void draw(int x, int y){
         if((curGenCells[x][y] & 0b1) > 0)
             game_of_live_graphics.setFill(ALIVE_CELL_COLOR);
@@ -101,7 +171,7 @@ public class Controller2 implements Initializable {
             game_of_live_graphics.clearRect(x * CELL_SIZE , y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
 
         }else{
-            game_of_live_graphics.setFill(Color.WHITE);
+            game_of_live_graphics.setFill(DEAD_CELL_COLOR);
             game_of_live_graphics.fillRect(x * CELL_SIZE , y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
         }
     }
@@ -128,12 +198,12 @@ public class Controller2 implements Initializable {
             }
         }
 
-        for (int x = 0; x <= CELL_WIDTH; x++) {
-            game_of_live_graphics.strokeLine(x * CELL_SIZE, 0, x * CELL_SIZE, PANE_HEIGHT);
-        }
-        for (int y = 0; y <= CELL_HEIGHT; y++) {
-            game_of_live_graphics.strokeLine(0,y * CELL_SIZE, PANE_WIDTH,y * CELL_SIZE);
-        }
+//        for (int x = 0; x <= CELL_WIDTH; x++) {
+//            game_of_live_graphics.strokeLine(x * CELL_SIZE, 0, x * CELL_SIZE, PANE_HEIGHT);
+//        }
+//        for (int y = 0; y <= CELL_HEIGHT; y++) {
+//            game_of_live_graphics.strokeLine(0,y * CELL_SIZE, PANE_WIDTH,y * CELL_SIZE);
+//        }
     }
 
     private void setCell(int x, int y, boolean alive){
@@ -173,7 +243,7 @@ public class Controller2 implements Initializable {
     private void clearCells(){
         curGenCells = new byte[CELL_WIDTH][CELL_HEIGHT];
         game_of_live_graphics.setFill(BG_COLOR);
-        game_of_live_graphics.clearRect(0,0,PANE_WIDTH,PANE_HEIGHT);
+        game_of_live_graphics.fillRect(0,0,PANE_WIDTH,PANE_HEIGHT);
     }
 
     private void drawAllCells(){
@@ -214,7 +284,7 @@ public class Controller2 implements Initializable {
         clearCells();
     }
 
-    public void setRuleOnClick(){
+    public void reset(){
 
     }
 
@@ -262,5 +332,15 @@ public class Controller2 implements Initializable {
             System.out.print(i+" "+bRule[i]+"\t");
         }
         System.out.println("\n====================");
+    }
+
+    private void rulesInitialize(){
+        sRule[2]=true;
+        sRule[3]=true;
+//        sRule[4]=true;
+
+        bRule[2]=true;
+        bRule[3]=true;
+
     }
 }

@@ -10,12 +10,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<Scene xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.game_of_life_v1.Controller2">
+<Scene fx:id="game_view" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.game_of_life_v1.Controller2">
     <AnchorPane prefHeight="456.0" prefWidth="513.0">
       <children>
          <ImageView fx:id="image" fitHeight="292.0" fitWidth="427.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@images/overwatch-forest-bastion-wallpaper-2560x2048_33.jpg" />
+               <Image url="@images/IMG_20220621_195943_836_1.jpg" />
             </image>
          </ImageView>
          <Canvas fx:id="gameOfLifePane" height="200.0" width="421.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
@@ -37,6 +37,13 @@
                      <Button fx:id="pauseBtn" mnemonicParsing="false" onAction="#pauseOnClick" text="pause" />
                      <Button mnemonicParsing="false" onAction="#clearOnClick" text="clear" />
                      <Button mnemonicParsing="false" onAction="#randomOnClick" text="random" />
+                  </children>
+               </HBox>
+               <HBox prefHeight="100.0" prefWidth="200.0">
+                  <children>
+                     <Button mnemonicParsing="false" text="click mode" />
+                     <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="drag mode" />
+                     <Button layoutX="65.0" layoutY="10.0" mnemonicParsing="false" text="select mode" />
                   </children>
                </HBox>
             </children>
