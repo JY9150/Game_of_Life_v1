@@ -8,45 +8,55 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <Scene fx:id="game_view" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.game_of_life_v1.Controller2">
     <AnchorPane prefHeight="456.0" prefWidth="513.0">
       <children>
-         <ImageView fx:id="image" fitHeight="292.0" fitWidth="427.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@images/IMG_20220621_195943_836_1.jpg" />
-            </image>
-         </ImageView>
-         <Canvas fx:id="gameOfLifePane" height="200.0" width="421.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         <VBox prefHeight="60.0" prefWidth="421.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-               <HBox fx:id="sBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
-                  <children>
-                     <Label text="Survives" />
-                  </children>
-               </HBox>
-               <HBox fx:id="bBox" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
-                  <children>
-                     <Label prefHeight="15.0" prefWidth="46.0" text="Born" />
-                  </children>
-               </HBox>
-               <HBox alignment="CENTER" prefHeight="37.0" prefWidth="436.0" spacing="10.0">
-                  <children>
-                     <Button fx:id="nextStateBtn" mnemonicParsing="false" onAction="#nextOnClick" text="Next" />
-                     <Button fx:id="pauseBtn" mnemonicParsing="false" onAction="#pauseOnClick" text="pause" />
-                     <Button mnemonicParsing="false" onAction="#clearOnClick" text="clear" />
-                     <Button mnemonicParsing="false" onAction="#randomOnClick" text="random" />
-                  </children>
-               </HBox>
-               <HBox prefHeight="100.0" prefWidth="200.0">
-                  <children>
-                     <Button mnemonicParsing="false" text="click mode" />
-                     <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="drag mode" />
-                     <Button layoutX="65.0" layoutY="10.0" mnemonicParsing="false" text="select mode" />
-                  </children>
-               </HBox>
+               <ImageView fx:id="image" fitHeight="292.0" fitWidth="427.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@images/IMG_20220621_195943_836_1.jpg" />
+                  </image>
+               </ImageView>
+               <Canvas fx:id="gameOfLifePane" height="200.0" width="421.0" />
             </children>
-         </VBox>
+         </StackPane>
+         <AnchorPane fx:id="setting_trigger" maxHeight="73.0" minHeight="20.0" prefHeight="73.0" prefWidth="513.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+         <AnchorPane fx:id="settings_view" layoutY="362.6666564941406" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+               <VBox prefHeight="60.0" prefWidth="421.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <children>
+                     <HBox fx:id="sBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                        <children>
+                           <Label text="Survives" />
+                        </children>
+                     </HBox>
+                     <HBox fx:id="bBox" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                        <children>
+                           <Label prefHeight="15.0" prefWidth="46.0" text="Born" />
+                        </children>
+                     </HBox>
+                     <HBox alignment="CENTER" prefHeight="37.0" prefWidth="436.0" spacing="10.0">
+                        <children>
+                           <Button fx:id="nextStateBtn" mnemonicParsing="false" onAction="#nextOnClick" text="Next" />
+                           <Button fx:id="pauseBtn" mnemonicParsing="false" onAction="#pauseOnClick" text="pause" />
+                           <Button mnemonicParsing="false" onAction="#clearOnClick" text="clear" />
+                           <Button mnemonicParsing="false" onAction="#randomOnClick" text="random" />
+                        </children>
+                     </HBox>
+                     <HBox prefHeight="100.0" prefWidth="200.0" visible="false">
+                        <children>
+                           <Button mnemonicParsing="false" text="click mode" />
+                           <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="drag mode" />
+                           <Button layoutX="65.0" layoutY="10.0" mnemonicParsing="false" text="select mode" />
+                        </children>
+                     </HBox>
+                  </children>
+               </VBox>
+            </children>
+         </AnchorPane>
       </children></AnchorPane>
 </Scene>
