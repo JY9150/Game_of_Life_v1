@@ -18,7 +18,7 @@
             <children>
                <ImageView fx:id="image" fitHeight="292.0" fitWidth="427.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@images/IMG_20220621_195943_836_1.jpg" />
+                     <Image url="@images/pexels-ben-mack-5707718.jpg" />
                   </image>
                </ImageView>
                <Canvas fx:id="gameOfLifePane" height="200.0" width="421.0" />

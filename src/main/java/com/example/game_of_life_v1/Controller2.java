@@ -40,7 +40,7 @@ public class Controller2 implements Initializable {
     private final int CELL_SIZE = 4;
     private final int CELL_WIDTH = 200;
     private final int CELL_HEIGHT = 200;
-    private final Color BG_COLOR = Color.valueOf("002c02");
+    private final Color BG_COLOR = Color.valueOf("003d50");
     private final Color DEAD_CELL_COLOR = BG_COLOR;
     private final Color ALIVE_CELL_COLOR = Color.BLACK;
     private final double STROKE_WIDTH = 0.1;
